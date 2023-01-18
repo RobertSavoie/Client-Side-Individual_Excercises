@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 "use strict";
 
 //IIFE - Immediately Invoked Function Expression
@@ -8,7 +10,23 @@
         switch(document.title)
         {
             case "Home":
+                DisplayProductsPage();
+                DisplayServicesPage();
+                DisplayAboutUsPage();
+                DisplayContactUsPage();
+                break;
+            case "Our Products":
                 DisplayHomePage();
+                break;
+            case "Our Services":
+                DisplayHomePage();
+                break;
+            case "About Us":
+                DisplayHomePage();
+                break;
+            case "Contact Us":
+                DisplayHomePage();
+                break;
         }
     }
     function DisplayHomePage() {

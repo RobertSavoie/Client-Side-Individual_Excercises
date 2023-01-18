@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 "use strict";
 
 //IIFE - Immediately Invoked Function Expression
@@ -5,6 +7,27 @@
 (function(){
     function Start() {
         console.log("App Started!")
+        switch(document.title)
+        {
+            case "Home":
+                DisplayProductsPage();
+                DisplayServicesPage();
+                DisplayAboutUsPage();
+                DisplayContactUsPage();
+                break;
+            case "Our Products":
+                DisplayHomePage();
+                break;
+            case "Our Services":
+                DisplayHomePage();
+                break;
+            case "About Us":
+                DisplayHomePage();
+                break;
+            case "Contact Us":
+                DisplayHomePage();
+                break;
+        }
     }
     function DisplayHomePage() {
         let HomeButton = document.getElementById("HomeBtn");
@@ -15,13 +38,13 @@
     function DisplayProductsPage() {
         let ProductsButton = document.getElementById("ProductsBtn");
         ProductsButton.addEventListener("click", function (){
-           location.href = "products.html";
+            location.href = "products.html";
         });
     }
     function DisplayServicesPage() {
         let ServicesButton = document.getElementById("ServicesBtn");
         ServicesButton.addEventListener("click", function (){
-           location.href = "services.html";
+            location.href = "services.html";
         });
     }
     function DisplayAboutUsPage() {
@@ -33,36 +56,11 @@
     function DisplayContactUsPage() {
         let ContactUsButton = document.getElementById("ContactUsBtn");
         ContactUsButton.addEventListener("click", function (){
-           location.href = "contact.html"
+            location.href = "contact.html"
         });
     }
 
     window.addEventListener("load", Start)
-    window.addEventListener("click", function (){
-        if (document.title !== "Home"){
-            DisplayHomePage();
-        }
-    })
-    window.addEventListener("click", function(){
-        if (document.title === "Home"){
-            DisplayProductsPage();
-        }
-    })
-    window.addEventListener("click", function(){
-        if (document.title === "Home"){
-            DisplayServicesPage();
-        }
-    })
-    window.addEventListener("click", function(){
-       if (document.title === "Home"){
-           DisplayAboutUsPage();
-       }
-    })
-    window.addEventListener("click", function(){
-        if (document.title === "Home"){
-            DisplayContactUsPage();
-        }
-    })
 
 })();
 
