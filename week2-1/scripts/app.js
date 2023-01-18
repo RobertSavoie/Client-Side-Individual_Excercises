@@ -9,3 +9,11 @@
     }
     window.addEventListener("load", Start)
 })();
+
+function DisplayHomePage(){
+    let AboutUsButton = document.getElementById("AboutUsBtn");
+    AboutUsButton.addEventListener("click", function ()
+    {
+        console.log("About Us Button Clicked");
+    });
+}
