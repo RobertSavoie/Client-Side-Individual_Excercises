@@ -1,41 +1,48 @@
-// noinspection DuplicatedCode
-
 "use strict";
 
 //IIFE - Immediately Invoked Function Expression
 //AKA  - Anonymous Self-Executing Function
 (function(){
 
-
-
     function Start() {
         console.log("App Started!")
         switch(document.title)
         {
             case "Home":
-                DisplayProductsPage();
-                DisplayServicesPage();
-                DisplayAboutUsPage();
-                DisplayContactUsPage();
+                DisplayHomePage();
                 break;
             case "Our Products":
-                DisplayHomePage();
+                DisplayProductsPage();
                 break;
             case "Our Services":
-                DisplayHomePage();
+                DisplayServicesPage();
                 break;
             case "About Us":
-                DisplayHomePage();
+                DisplayAboutUsPage();
                 break;
             case "Contact Us":
-                DisplayHomePage();
+                DisplayContactUsPage();
                 break;
         }
     }
+    window.addEventListener("load", Start)
+
     function DisplayHomePage() {
-        let HomeButton = document.getElementById("HomeBtn");
-        HomeButton.addEventListener("click", function (){
-            location.href = "index.html"
+        let ProductsButton = document.getElementById("ProductsBtn");
+        ProductsButton.addEventListener("click", function (){
+            location.href = "products.html";
+        });
+        let ServicesButton = document.getElementById("ServicesBtn");
+        ServicesButton.addEventListener("click", function (){
+            location.href = "services.html";
+        });
+        let AboutUsButton = document.getElementById("AboutUsBtn");
+        AboutUsButton.addEventListener("click", function(){
+            location.href = "about.html";
+        });
+        let ContactUsButton = document.getElementById("ContactUsBtn");
+        ContactUsButton.addEventListener("click", function (){
+            location.href = "contact.html"
         });
 
         // Paragraph creation using content injection
@@ -59,31 +66,29 @@
         MainContent.appendChild(Article);
     }
     function DisplayProductsPage() {
-        let ProductsButton = document.getElementById("ProductsBtn");
-        ProductsButton.addEventListener("click", function (){
-            location.href = "products.html";
+        let HomeButton = document.getElementById("HomeBtn");
+        HomeButton.addEventListener("click", function (){
+            location.href = "index.html";
         });
     }
     function DisplayServicesPage() {
-        let ServicesButton = document.getElementById("ServicesBtn");
-        ServicesButton.addEventListener("click", function (){
-            location.href = "services.html";
+        let HomeButton = document.getElementById("HomeBtn");
+        HomeButton.addEventListener("click", function (){
+            location.href = "index.html";
         });
     }
     function DisplayAboutUsPage() {
-        let AboutUsButton = document.getElementById("AboutUsBtn");
-        AboutUsButton.addEventListener("click", function(){
-            location.href = "about.html";
+        let HomeButton = document.getElementById("HomeBtn");
+        HomeButton.addEventListener("click", function (){
+            location.href = "index.html";
         });
     }
     function DisplayContactUsPage() {
-        let ContactUsButton = document.getElementById("ContactUsBtn");
-        ContactUsButton.addEventListener("click", function (){
-            location.href = "contact.html"
+        let HomeButton = document.getElementById("HomeBtn");
+        HomeButton.addEventListener("click", function (){
+            location.href = "index.html";
         });
     }
-
-    window.addEventListener("load", Start)
 
 })();
 
