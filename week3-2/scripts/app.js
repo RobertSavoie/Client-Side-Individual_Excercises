@@ -23,6 +23,9 @@
             case "Contact Us":
                 DisplayContactUsPage();
                 break;
+            case "Contact List":
+                DisplayContactUsPage();
+                break;
         }
     }
     window.addEventListener("load", Start)
@@ -88,7 +91,27 @@
         HomeButton.addEventListener("click", function (){
             location.href = "index.html";
         });
-    }
+        let sendButton = document.getElementById("sendButton");
+        let subscribeCheckbox = document.getElementById("subscriptionCheckbox");
+        sendButton.addEventListener("click", function(event){
 
+            if(subscribeCheckbox.checked){
+                let contact = new Contact(document.getElementById("fullname").value,
+                                        document.getElementById("contactnumber").value,
+                                        document.getElementById("email").value);
+                if(contact.serialize()){
+                    let key = contact.FullName.substring(0,1) + Date.now();
+                    localStorage.setItem(key, contact.serialize());
+                }
+            }
+            location.href = "contact-list.html";
+        });
+    }
+    function DisplayContactListPage(){
+        let HomeButton = document.getElementById("HomeBtn");
+        HomeButton.addEventListener("click", function (){
+            location.href = "index.html";
+        });
+    }
 })();
 
