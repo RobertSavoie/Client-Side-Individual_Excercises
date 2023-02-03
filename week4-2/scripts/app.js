@@ -26,76 +26,40 @@
             case "Contact List":
                 DisplayContactListPage();
                 break;
+            case "Edit Contact":
+                DisplayEditContactPage();
+                break;
         }
     }
     window.addEventListener("load", Start)
 
     function DisplayHomePage() {
         console.log("Home Page")
-        let ProductsButton = document.getElementById("ProductsBtn");
-        ProductsButton.addEventListener("click", function (){
-            location.href = "products.html";
-        });
-        let ServicesButton = document.getElementById("ServicesBtn");
-        ServicesButton.addEventListener("click", function (){
-            location.href = "services.html";
-        });
-        let AboutUsButton = document.getElementById("AboutUsBtn");
-        AboutUsButton.addEventListener("click", function(){
-            location.href = "about.html";
-        });
-        let ContactUsButton = document.getElementById("ContactUsBtn");
-        ContactUsButton.addEventListener("click", function (){
-            location.href = "contact.html"
-        });
+        $("#ProductsBtn").on("click", () => {location.href = "products.html";});
+        $("#ServicesBtn").on("click", () => {location.href = "services.html";});
+        $("#AboutUsBtn").on("click", () => {location.href = "about.html";});
+        $("#ContactUsBtn").on("click", () => {location.href = "contact.html";});
 
-        // Paragraph creation using content injection
-        let MainContent = document.getElementsByTagName("main")[0];
-        let MainParagraph = document.createElement("p")
-        MainParagraph.setAttribute("id", "MainParagraph")
-        MainParagraph.setAttribute("class", "mt-3")
-        MainParagraph.textContent = "This is the Main Paragraph!"
-        MainContent.appendChild(MainParagraph);
+        $("main").append(`<p id="MainParagraph" class="mt-3">This is the Main Paragraph!</p>`)
 
-        // Template strings
-        let FirstString = "This is";
-        let SecondString = `${FirstString} the Main Paragraph.`;
-        MainParagraph.textContent = SecondString;
-
-        // Create article
-        let Article = document.createElement("article");
-        let ArticleParagraph = `<p id="ArticleParagraph" class="mt-3">This is my Article Paragraph</p>`;
-        Article.setAttribute("class", "container")
-        Article.innerHTML = ArticleParagraph;
-        MainContent.appendChild(Article);
+        $("body").append(`<article class="container">
+                        <p id="ArticleParagraph" class="mt-3">This is my Article Paragraph</p></article>`)
     }
     function DisplayProductsPage() {
         console.log("Products Page")
-        let HomeButton = document.getElementById("HomeBtn");
-        HomeButton.addEventListener("click", function (){
-            location.href = "index.html";
-        });
+        Buttons();
     }
     function DisplayServicesPage() {
         console.log("Services Page")
-        let HomeButton = document.getElementById("HomeBtn");
-        HomeButton.addEventListener("click", function (){
-            location.href = "index.html";
-        });
+        Buttons();
     }
     function DisplayAboutUsPage() {
         console.log("About Us Page")
-        let HomeButton = document.getElementById("HomeBtn");
-        HomeButton.addEventListener("click", function (){
-            location.href = "index.html";
-        });
+        Buttons();
     }
     function DisplayContactUsPage() {
         console.log("Contact Us Page")
-        let HomeButton = document.getElementById("HomeBtn");
-        HomeButton.addEventListener("click", function (){
-            location.href = "index.html";
-        });
+        Buttons();
         let sendButton = document.getElementById("sendButton");
         let subscribeCheckbox = document.getElementById("subscriptionCheckbox");
         sendButton.addEventListener("click", function(event){
@@ -115,10 +79,7 @@
     }
     function DisplayContactListPage(){
         console.log("Contact List Page")
-        let HomeButton = document.getElementById("HomeBtn");
-        HomeButton.addEventListener("click", function (){
-            location.href = "index.html";
-        });
+        Buttons();
 
         if(localStorage.length > 0){
             let contactList = document.getElementById("contactList");
@@ -142,6 +103,17 @@
             }
             contactList.innerHTML = data;
         }
+    }
+    function DisplayEditContactPage(){
+        console.log("Edit Contact Page")
+        Buttons();
+    }
+    function Buttons(){
+        $("#HomeBtn").on("click", () => {location.href = "index.html";});
+        $("#ProductsBtn").on("click", () => {location.href = "products.html";});
+        $("#ServicesBtn").on("click", () => {location.href = "services.html";});
+        $("#AboutUsBtn").on("click", () => {location.href = "about.html";});
+        $("#ContactUsBtn").on("click", () => {location.href = "contact.html";});
     }
 })();
 
