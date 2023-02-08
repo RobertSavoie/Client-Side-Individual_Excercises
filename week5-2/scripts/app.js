@@ -1,3 +1,5 @@
+// noinspection JSJQueryEfficiency
+
 "use strict";
 
 //IIFE - Immediately Invoked Function Expression
@@ -29,6 +31,12 @@
             case "Edit Contact":
                 DisplayEditContactPage();
                 break;
+            case "Login":
+                DisplayLoginPage();
+                break;
+            case "Register":
+                DisplayRegisterPage();
+                break;
         }
     }
     window.addEventListener("load", Start)
@@ -59,7 +67,11 @@
     }
     function DisplayContactUsPage() {
         console.log("Contact Us Page")
+
         Buttons();
+
+        ContactFormValidation();
+
         let subscribeCheckbox = document.getElementById("subscriptionCheckbox");
         $("#SendBtn").on("click", function(event){
             event.preventDefault();
@@ -75,6 +87,7 @@
     }
     function DisplayContactListPage(){
         console.log("Contact List Page")
+
         Buttons();
 
         if(localStorage.length > 0){
@@ -123,7 +136,10 @@
     function DisplayEditContactPage(){
         console.log("Edit Contact Page")
 
+        ContactFormValidation();
+
         let page = location.hash.substring(1);
+
         switch(page){
             case "add":
                 $("main>h1").text("Add Contact");
@@ -166,6 +182,15 @@
 
         Buttons();
     }
+
+    function DisplayLoginPage(){
+        console.log("Display Login Page")
+    }
+
+    function DisplayRegisterPage(){
+        console.log("Display Register Page")
+    }
+
     function Buttons(){
         $("#HomeBtn").on("click", () => {location.href = "index.html";});
         $("#ProductsBtn").on("click", () => {location.href = "products.html";});
@@ -177,16 +202,49 @@
     /**
      * Creates a contact from the given parameters
      * @param {string}fullName
-     * @param {string}contactNumner
+     * @param {string}contactNumber
      * @param {string}emailAddress
      * @param {string}message
      */
-    function AddContact(fullName, contactNumner, emailAddress, message){
-        let contact = new core.Contact(fullName, contactNumner, emailAddress, message);
+    function AddContact(fullName, contactNumber, emailAddress, message){
+        let contact = new core.Contact(fullName, contactNumber, emailAddress, message);
         if(contact.serialize()){
             let key = contact.FullName.substring(0,1) + Date.now();
             localStorage.setItem(key, contact.serialize());
         }
     }
+
+    function ContactFormValidation(){
+        // Validate full name
+        ValidateField("#fullName",
+            /^([A-Z][a-z]{1,3}\.?\s)?([A-Z][a-z]+)+([\s,-]([A-Z][a-z]+))*$/,
+            "Please enter a valid first and last name (ex. Mr. Peter Parker)");
+        // Validate Phone Number
+        ValidateField("#contactNumber",
+            /^(\+\d{1,3}[\s-.])?\(?\d{3}\)?[\s-.]?\d{3}[\s-.]\d{4}$/,
+            "Please enter a valid phone number (ex. 555 555-5555");
+        // Validate Email Address
+        ValidateField("#email",
+            /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,10}$/,
+            "Please enter a valid email address (ex. example@email.com");
+    }
+
+    function ValidateField(inputFieldID, regularExpression, errorMessage){
+        let messageArea = $("#messageArea");
+
+        $(inputFieldID).on("blur", function(){
+
+            let inputFieldText = $(this).val();
+            if(!regularExpression.test(inputFieldText)){
+                // fail validation
+                $(this).trigger("focus").trigger("select"); // go back to the fullName text
+                messageArea.addClass("alert alert-danger").text(errorMessage).show();
+            }else{
+                //pass validation
+                messageArea.removeAttr("class").hide();
+            }
+        });
+    }
+
 })();
 
