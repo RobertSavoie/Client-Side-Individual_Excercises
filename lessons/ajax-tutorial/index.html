@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax Tutorial</title>
+</head>
+<body>
+
+    <main>
+        <button id="showCountries">Show Countries</button>
+        <dive id="feed"></dive>
+    </main>
+
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+        <script>
+            $("#showCountries").on("click", () => {
+                // Step 1
+                let xhr = new XMLHttpRequest();
+
+                // Step 2
+                xhr.open("GET", "https://restcountries.com/v3.1/all", true);
+
+                // Step 3
+                xhr.send();
+
+                xhr.onload = function() {
+                    if(xhr.status === 200 && xhr.readyState === 4){
+
+                        let countries = JSON.parse(xhr.responseText);
+                        // console.log(countries);
+
+                        countries.forEach( c => {
+                            $("#feed").append(`<div>${c.name.common}</div>`)
+                                .append($("<img>")
+                                .attr("src", `${c.flags.svg}`)
+                                .attr("alt", `${c.flag}`)
+                                .attr("height", "150"))
+                        });
+                    }
+                }
+            });
+
+        </script>
+</body>
+</html>
