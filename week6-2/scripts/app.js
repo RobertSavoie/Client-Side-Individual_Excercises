@@ -8,6 +8,7 @@
 
     function Start() {
         console.log("App Started!")
+        AjaxRequest("GET", "header.html", LoadHeader);
         switch(document.title)
         {
             case "Home":
@@ -67,7 +68,6 @@
     }
     function DisplayContactUsPage() {
         console.log("Contact Us Page")
-
         Buttons();
 
         ContactFormValidation();
@@ -87,7 +87,6 @@
     }
     function DisplayContactListPage(){
         console.log("Contact List Page")
-
         Buttons();
 
         if(localStorage.length > 0){
@@ -244,6 +243,33 @@
                 messageArea.removeAttr("class").hide();
             }
         });
+    }
+
+    function AjaxRequest(method, url, callback){
+        // Step 1
+        let xhr = new XMLHttpRequest();
+
+        // Step 2
+        xhr.addEventListener("readystatechange", ()=>{
+            if(xhr.readyState === 4 && xhr.status === 200){
+                if(typeof callback === "function"){
+                    callback(xhr.responseText);
+                }else{
+                    console.error("Error: Please provide a valid function for callback")
+                }
+            }
+        });
+
+        // Step 3
+        xhr.open(method, url);
+
+        // Step 4
+        xhr.send()
+    }
+
+    function LoadHeader(data){
+        $("*header").append(data);
+        $(`li>a:contains(${document.title})`).addClass("active");
     }
 
 })();
