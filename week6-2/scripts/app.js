@@ -7,8 +7,10 @@
 (function(){
 
     function Start() {
-        console.log("App Started!")
+        console.log("App Started!");
+
         AjaxRequest("GET", "header.html", LoadHeader);
+
         switch(document.title)
         {
             case "Home":
@@ -40,6 +42,7 @@
                 break;
         }
     }
+
     window.addEventListener("load", Start)
 
     function DisplayHomePage() {
@@ -184,6 +187,57 @@
 
     function DisplayLoginPage(){
         console.log("Display Login Page")
+
+        let messageArea = $("#messageArea");
+        messageArea.hide();
+        $("#loginBtn").on("click", function(){
+
+            let success = false;
+            let newUser = new core.User();
+
+            $.get("./data/user.json", function(data){
+
+                for(const u of data.users){
+                    if(userName.value === u.Username && password.value === u.Password){
+                        success = true;
+                        newUser.fromJSON(u);
+                        break;
+                    }
+                }
+
+                if(success){
+                    sessionStorage.setItem("user", newUser.serialize());
+                    messageArea.removeAttr("class").hide();
+                    location.href = "contact.html";
+                }
+                else{
+                    $("#userName").trigger("focus").trigger("select");
+                    messageArea.addClass("alert alert-danger").text("Error: Failed to authenticate");
+                }
+
+            });
+
+        });
+
+        $("#cancelBtn").on("click", function(){
+            document.forms[0].reset();
+            location.href = "index.html";
+        })
+
+    }
+
+    function CheckLogin(){
+
+        if(sessionStorage.getItem("user")){
+
+            $("#login").html(`<a id="logout" class="nav-link" href="#">
+                            <i class="fa-solid fa-sign-out-alt"></i> Logout</a>`);
+
+        }
+        $("#logout").on("click", function(){
+            sessionStorage.clear();
+            location.href = "index.html";
+        })
     }
 
     function DisplayRegisterPage(){
@@ -270,6 +324,7 @@
     function LoadHeader(data){
         $("*header").append(data);
         $(`li>a:contains(${document.title})`).addClass("active");
+        CheckLogin();
     }
 
 })();

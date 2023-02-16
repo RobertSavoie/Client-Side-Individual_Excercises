@@ -49,11 +49,25 @@
         // Methods
         toString() {
             return `Display Name: ${this.DisplayName}\n 
-                Username: ${this.Username}\n 
-                Email Address: ${this.EmailAddress}`;
+                Email Address: ${this.EmailAddress}\n
+                Username: ${this.Username}`;
         }
 
+        toJSON(){
+            return {
+                "DisplayName" : this.DisplayName,
+                "EmailAddress" : this.EmailAddress,
+                "Username" : this.Username,
+                "Password" : this.Password
+            }
+        }
 
+        fromJSON(data){
+            this.DisplayName = data.DisplayName;
+            this.EmailAddress = data.EmailAddress;
+            this.Username = data.Username;
+            this.Password = data.Password;
+        }
 
         serialize() {
             if (this.DisplayName !== "" && this.EmailAddress !== ""
