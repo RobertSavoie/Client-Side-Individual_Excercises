@@ -5,13 +5,46 @@
 //IIFE - Immediately Invoked Function Expression
 //AKA  - Anonymous Self-Executing Function
 (function(){
+    /**
+     * Returns a function for the activeLink (current path) to display
+     * @param {string}activeLink
+     * @returns {function}
+     */
+    function ActiveLinkCallback(activeLink){
+
+        switch(activeLink)
+        {
+            case "home" : return DisplayHomePage;
+            case "about" : return DisplayAboutUsPage;
+            case "contact" : return DisplayContactUsPage;
+            case "contact-list" : return DisplayContactListPage;
+            case "edit" : return DisplayEditContactPage;
+            case "login" : return DisplayLoginPage;
+            case "register" : return DisplayRegisterPage;
+            case "products" : return DisplayProductsPage;
+            case "services" : return DisplayServicesPage;
+            case "404" : return Display404Page;
+            default:
+                console.error("Error: Callback does not exist " + activeLink);
+                break;
+        }
+    }
 
     function Start() {
         console.log("App Started!");
 
-        AjaxRequest("GET", "header.html", LoadHeader);
+        //TODO
+        //LoadHeader();
 
-        switch(document.title)
+        //TODO
+        //LoadContent();
+
+        //TODO
+        //LoadFooter();
+
+        AjaxRequest("GET", "./views/compenents/header.html", LoadHeader);
+
+        /*switch(document.title)
         {
             case "Home":
                 DisplayHomePage();
@@ -40,7 +73,7 @@
             case "Register":
                 DisplayRegisterPage();
                 break;
-        }
+        }*/
     }
 
     window.addEventListener("load", Start)
@@ -225,6 +258,13 @@
         })
 
     }
+    function DisplayRegisterPage(){
+        console.log("Display Register Page")
+    }
+
+    function Display404Page(){
+        //TODO
+    }
 
     function CheckLogin(){
 
@@ -238,10 +278,6 @@
             sessionStorage.clear();
             location.href = "index.html";
         })
-    }
-
-    function DisplayRegisterPage(){
-        console.log("Display Register Page")
     }
 
     function Buttons(){
@@ -326,6 +362,15 @@
         $(`li>a:contains(${document.title})`).addClass("active");
         CheckLogin();
     }
+
+    function LoadContent(){
+        //TODO
+    }
+
+    function LoadFooter(){
+        //TODO
+    }
+
 
 })();
 
