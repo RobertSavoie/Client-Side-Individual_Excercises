@@ -10,9 +10,9 @@
      * @param {string}activeLink
      * @returns {function}
      */
-    function ActiveLinkCallback(activeLink){
+    function ActiveLinkCallback(){
 
-        switch(activeLink)
+        switch(router.ActiveLink)
         {
             case "home" : return DisplayHomePage;
             case "about" : return DisplayAboutUsPage;
@@ -25,58 +25,10 @@
             case "services" : return DisplayServicesPage;
             case "404" : return Display404Page;
             default:
-                console.error("Error: Callback does not exist " + activeLink);
+                console.error("Error: Callback does not exist " + router.ActiveLink);
                 break;
         }
     }
-
-    function Start() {
-        console.log("App Started!");
-
-        //TODO
-        //LoadHeader();
-
-        //TODO
-        //LoadContent();
-
-        //TODO
-        //LoadFooter();
-
-        AjaxRequest("GET", "./views/compenents/header.html", LoadHeader);
-
-        /*switch(document.title)
-        {
-            case "Home":
-                DisplayHomePage();
-                break;
-            case "Our Products":
-                DisplayProductsPage();
-                break;
-            case "Our Services":
-                DisplayServicesPage();
-                break;
-            case "About Us":
-                DisplayAboutUsPage();
-                break;
-            case "Contact Us":
-                DisplayContactUsPage();
-                break;
-            case "Contact List":
-                DisplayContactListPage();
-                break;
-            case "Edit Contact":
-                DisplayEditContactPage();
-                break;
-            case "Login":
-                DisplayLoginPage();
-                break;
-            case "Register":
-                DisplayRegisterPage();
-                break;
-        }*/
-    }
-
-    window.addEventListener("load", Start)
 
     function DisplayHomePage() {
         console.log("Home Page")
@@ -263,7 +215,7 @@
     }
 
     function Display404Page(){
-        //TODO
+        console.log("Displaying 404 Page")
     }
 
     function CheckLogin(){
@@ -357,20 +309,57 @@
         xhr.send()
     }
 
+    function capitalizeFirstCharacter(str){
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
     function LoadHeader(data){
-        $("*header").append(data);
-        $(`li>a:contains(${document.title})`).addClass("active");
-        CheckLogin();
+
+        $.get("/views/components/header.html", function (html_data){
+
+            $("header").html(html_data);
+
+            document.title = capitalizeFirstCharacter(router.ActiveLink);
+
+            $(`li>a:contains(${document.title})`).addClass("active");
+            CheckLogin();
+        });
     }
 
     function LoadContent(){
-        //TODO
+
+        let page = router.ActiveLink;
+        let callback = ActiveLinkCallback();
+
+        $.get(`/views/components/${page}.html`, function (html_data){
+
+            $("main").html(html_data);
+            callback();
+
+        });
+
     }
 
     function LoadFooter(){
-        //TODO
+
+        $.get("/views/components/footer.html", function (html_data){
+
+            $("footer").html(html_data);
+        });
+
     }
 
+    function Start() {
+        console.log("App Started!");
+
+        LoadHeader();
+
+        LoadContent();
+
+        LoadFooter();
+    }
+
+    window.addEventListener("load", Start)
 
 })();
 
