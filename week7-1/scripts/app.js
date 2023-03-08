@@ -32,10 +32,6 @@
 
     function DisplayHomePage() {
         console.log("Home Page")
-        $("#ProductsBtn").on("click", () => {location.href = "products.html";});
-        $("#ServicesBtn").on("click", () => {location.href = "services.html";});
-        $("#AboutUsBtn").on("click", () => {location.href = "about.html";});
-        $("#ContactUsBtn").on("click", () => {location.href = "contact.html";});
 
         $("main").append(`<p id="MainParagraph" class="mt-3">This is the Main Paragraph!</p>`)
 
@@ -44,19 +40,15 @@
     }
     function DisplayProductsPage() {
         console.log("Products Page")
-        Buttons();
     }
     function DisplayServicesPage() {
         console.log("Services Page")
-        Buttons();
     }
     function DisplayAboutUsPage() {
         console.log("About Us Page")
-        Buttons();
     }
     function DisplayContactUsPage() {
         console.log("Contact Us Page")
-        Buttons();
 
         ContactFormValidation();
 
@@ -69,13 +61,12 @@
                            document.getElementById("contactNumber").value,
                            document.getElementById("email").value,
                            document.getElementById("message").value);
-                location.href = "contact-list.html";
+                location.href = "/contact-list";
             }
         });
     }
     function DisplayContactListPage(){
         console.log("Contact List Page")
-        Buttons();
 
         if(localStorage.length > 0){
             let contactList = document.getElementById("contactList");
@@ -107,15 +98,15 @@
                 index++;
             }
             contactList.innerHTML = data;
-            $("#AddBtn").on("click", () => {location.href = "edit.html#add";});
+            $("#AddBtn").on("click", () => {location.href = "/edit#add";});
             $("button.delete").on("click", function () {
                 if(confirm("Are you sure you want to delete this contact?")){
                     localStorage.removeItem($(this).val());
-                    location.href = "contact-list.html";
+                    location.href = "/contact-list";
                 }
             });
             $("button.edit").on("click", function () {
-                location.href = "edit.html#" + $(this).val();
+                location.href = "/edit#" + $(this).val();
 
             });
         }
@@ -138,10 +129,10 @@
                                document.getElementById("contactNumber").value,
                                document.getElementById("email").value,
                                document.getElementById("message").value);
-                    location.href = "contact-list.html";
+                    location.href = "/contact-list";
                 });
 
-                $("#CancelBtn").on("click", () => {location.href = "contact-list.html";});
+                $("#CancelBtn").on("click", () => {location.href = "/contact-list";});
                 break;
             default:{
                 let contact = new core.Contact();
@@ -160,14 +151,12 @@
 
                     localStorage.setItem(page, contact.serialize());
 
-                    location.href = "contact-list.html";
+                    location.href = "/contact-list";
                 });
-                $("#CancelBtn").on("click", () => {location.href = "contact-list.html";});
+                $("#CancelBtn").on("click", () => {location.href = "/contact-list";});
                 break;
             }
         }
-
-        Buttons();
     }
 
     function DisplayLoginPage(){
@@ -193,7 +182,7 @@
                 if(success){
                     sessionStorage.setItem("user", newUser.serialize());
                     messageArea.removeAttr("class").hide();
-                    location.href = "contact.html";
+                    location.href = "/contact";
                 }
                 else{
                     $("#userName").trigger("focus").trigger("select");
@@ -206,7 +195,7 @@
 
         $("#cancelBtn").on("click", function(){
             document.forms[0].reset();
-            location.href = "index.html";
+            location.href = "/";
         })
 
     }
@@ -228,16 +217,8 @@
         }
         $("#logout").on("click", function(){
             sessionStorage.clear();
-            location.href = "index.html";
+            location.href = "/";
         })
-    }
-
-    function Buttons(){
-        $("#HomeBtn").on("click", () => {location.href = "index.html";});
-        $("#ProductsBtn").on("click", () => {location.href = "products.html";});
-        $("#ServicesBtn").on("click", () => {location.href = "services.html";});
-        $("#AboutUsBtn").on("click", () => {location.href = "about.html";});
-        $("#ContactUsBtn").on("click", () => {location.href = "contact.html";});
     }
 
     /**
@@ -331,7 +312,7 @@
         let page = router.ActiveLink;
         let callback = ActiveLinkCallback();
 
-        $.get(`/views/components/${page}.html`, function (html_data){
+        $.get(`/views/content/${page}.html`, function (html_data){
 
             $("main").html(html_data);
             callback();

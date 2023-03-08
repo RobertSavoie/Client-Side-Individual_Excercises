@@ -1,33 +1,34 @@
 "use strict";
 
-(function (core){
+(function (core)
+{
 
-    class Router{
-
+    class Router
+    {
         //public properties
+
         /**
          *
          * @returns {string}
          */
-        get ActiveLink(){
-            return this.m_activelink;
+        get ActiveLink() {
+            return this.m_activeLink;
         }
 
         /**
          *
-         * @param string
+         * @param String
          */
         set ActiveLink(link){
-            this.m_activelink = link;
+            this.m_activeLink = link;
         }
 
-        //constructor
-        constructor() {
-            this.m_activelink = "";
+        //Constructors
+        constructor(){
+            this.m_activeLink = "";
         }
 
         //public methods
-
         Add(route){
             this.m_routingTable.push(route);
         }
@@ -50,31 +51,34 @@
 
         //public overrides
         toString(){
-            //TODO
+            return this.m_routingTable.toString();
         }
-    }
 
+
+
+
+    }
     core.Router = Router;
 
 })(core || (core = {}));
 
 let router = new core.Router();
 
-router.Add([
-   "/",
-   "/home",
-   "/about",
-   "/contact",
-   "/contact-list",
-   "/edit",
-   "/login",
-   "/register",
-   "/products",
-   "/services"
+router.AddTable([
+    "/",
+    "/home",
+    "/about",
+    "/contact",
+    "/contact-list",
+    "/edit",
+    "/login",
+    "/products",
+    "/register",
+    "/services"
 ]);
 
 let route = location.pathname;
 
-router.ActiveLink = (this.Find(route) > -1)
-                    ? (route === "/") ? "home" : route.substring(1)
+router.ActiveLink = (router.Find(route) > -1)
+                    ? (route === "/" ) ? "home" : route.substring(1)
                     : ("404");
