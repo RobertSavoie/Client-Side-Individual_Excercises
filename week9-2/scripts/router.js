@@ -1,69 +1,43 @@
 "use strict";
-
-(function (core)
-{
-
-    class Router
-    {
-        //public properties
-
-        /**
-         *
-         * @returns {string}
-         */
+var Router = core.Router;
+var core;
+(function (core) {
+    class Router {
+        m_activeLink;
+        m_routingTable;
         get ActiveLink() {
             return this.m_activeLink;
         }
-
-        /**
-         *
-         * @param String
-         */
-        set ActiveLink(link){
+        set ActiveLink(link) {
             this.m_activeLink = link;
         }
-
-        //Constructors
-        constructor(){
+        constructor() {
             this.m_activeLink = "";
+            this.m_routingTable = [];
         }
-
-        //public methods
-        Add(route){
+        Add(route) {
             this.m_routingTable.push(route);
         }
-
-        AddTable(routingTable){
+        AddTable(routingTable) {
             this.m_routingTable = routingTable;
         }
-
-        Find(route){
+        Find(route) {
             return this.m_routingTable.indexOf(route);
         }
-
-        Remove(route){
-            if(this.Find(route) > -1){
+        Remove(route) {
+            if (this.Find(route) > -1) {
                 this.m_routingTable.splice(this.Find(route), 1);
                 return true;
             }
             return false;
         }
-
-        //public overrides
-        toString(){
+        toString() {
             return this.m_routingTable.toString();
         }
-
-
-
-
     }
     core.Router = Router;
-
 })(core || (core = {}));
-
 let router = new core.Router();
-
 router.AddTable([
     "/",
     "/home",
@@ -76,9 +50,8 @@ router.AddTable([
     "/register",
     "/services"
 ]);
-
 let route = location.pathname;
-
 router.ActiveLink = (router.Find(route) > -1)
-                    ? (route === "/" ) ? "home" : route.substring(1)
-                    : ("404");
+    ? (route === "/") ? "home" : route.substring(1)
+    : ("404");
+//# sourceMappingURL=router.js.map
