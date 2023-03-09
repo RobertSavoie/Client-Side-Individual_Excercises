@@ -1,81 +1,63 @@
-// noinspection JSJQueryEfficiency
-
 "use strict";
-
-//IIFE - Immediately Invoked Function Expression
-//AKA  - Anonymous Self-Executing Function
-(function(){
-    /**
-     * Returns a function for the activeLink (current path) to display
-     * @param {string}activeLink
-     * @returns {function}
-     */
-    function ActiveLinkCallback(){
-
-        switch(router.ActiveLink)
-        {
-            case "home" : return DisplayHomePage;
-            case "about" : return DisplayAboutUsPage;
-            case "contact" : return DisplayContactUsPage;
-            case "contact-list" : return DisplayContactListPage;
-            case "edit" : return DisplayEditContactPage;
-            case "login" : return DisplayLoginPage;
-            case "register" : return DisplayRegisterPage;
-            case "products" : return DisplayProductsPage;
-            case "services" : return DisplayServicesPage;
-            case "404" : return Display404Page;
+(function () {
+    function ActiveLinkCallback() {
+        switch (router.ActiveLink) {
+            case "home": return DisplayHomePage;
+            case "about": return DisplayAboutUsPage;
+            case "contact": return DisplayContactUsPage;
+            case "contact-list": return DisplayContactListPage;
+            case "edit": return DisplayEditContactPage;
+            case "login": return DisplayLoginPage;
+            case "register": return DisplayRegisterPage;
+            case "products": return DisplayProductsPage;
+            case "services": return DisplayServicesPage;
+            case "404": return Display404Page;
             default:
                 console.error("Error: Callback does not exist " + router.ActiveLink);
-                break;
+                return new Function();
         }
     }
-
     function DisplayHomePage() {
-        console.log("Home Page")
-
-        $("main").append(`<p id="MainParagraph" class="mt-3">This is the Main Paragraph!</p>`)
-
+        console.log("Home Page");
+        $("main").append(`<p id="MainParagraph" class="mt-3">This is the Main Paragraph!</p>`);
         $("body").append(`<article class="container">
-                        <p id="ArticleParagraph" class="mt-3">This is my Article Paragraph</p></article>`)
+                        <p id="ArticleParagraph" class="mt-3">This is my Article Paragraph</p></article>`);
     }
     function DisplayProductsPage() {
-        console.log("Products Page")
+        console.log("Products Page");
     }
     function DisplayServicesPage() {
-        console.log("Services Page")
+        console.log("Services Page");
     }
     function DisplayAboutUsPage() {
-        console.log("About Us Page")
+        console.log("About Us Page");
     }
     function DisplayContactUsPage() {
-        console.log("Contact Us Page")
-
+        console.log("Contact Us Page");
         ContactFormValidation();
-
+        let sendButton = document.getElementById("SendBtn");
         let subscribeCheckbox = document.getElementById("subscriptionCheckbox");
-        $("#SendBtn").on("click", function(event){
+        sendButton.addEventListener("click", function (event) {
             event.preventDefault();
-            if(subscribeCheckbox.checked){
-                console.log("Checkbox checked!")
-                AddContact(document.getElementById("fullName").value,
-                           document.getElementById("contactNumber").value,
-                           document.getElementById("email").value,
-                           document.getElementById("message").value);
+            if (subscribeCheckbox.checked) {
+                console.log("Checkbox checked!");
+                let fullName = document.forms[0].fullName.value;
+                let contactNumber = document.forms[0].contactNumber.value;
+                let emailAddress = document.forms[0].emailAddress.value;
+                let message = document.forms[0].message.value;
+                AddContact(fullName, contactNumber, emailAddress, message);
                 location.href = "/contact-list";
             }
         });
     }
-    function DisplayContactListPage(){
-        console.log("Contact List Page")
-
-        if(localStorage.length > 0){
+    function DisplayContactListPage() {
+        console.log("Contact List Page");
+        if (localStorage.length > 0) {
             let contactList = document.getElementById("contactList");
             let data = "";
-            // Add deserialized data from localStorage
             let keys = Object.keys(localStorage);
-            // return a string array of keys
             let index = 1;
-            for(const key of keys){
+            for (const key of keys) {
                 let contactData = localStorage.getItem(key);
                 let contact = new core.Contact();
                 contact.deserialize(contactData);
@@ -98,43 +80,38 @@
                 index++;
             }
             contactList.innerHTML = data;
-            $("#AddBtn").on("click", () => {location.href = "/edit#add";});
+            $("#AddBtn").on("click", () => { location.href = "/edit#add"; });
             $("button.delete").on("click", function () {
-                if(confirm("Are you sure you want to delete this contact?")){
+                if (confirm("Are you sure you want to delete this contact?")) {
                     localStorage.removeItem($(this).val());
                     location.href = "/contact-list";
                 }
             });
             $("button.edit").on("click", function () {
                 location.href = "/edit#" + $(this).val();
-
             });
         }
     }
-    function DisplayEditContactPage(){
-        console.log("Edit Contact Page")
-
+    function DisplayEditContactPage() {
+        console.log("Edit Contact Page");
         ContactFormValidation();
-
         let page = location.hash.substring(1);
-
-        switch(page){
+        switch (page) {
             case "add":
                 $("main>h1").text("Add Contact");
                 $("#EditBtn").html(`<i class="fas fa-plus fa-sm"></i> Add`);
-
                 $("#EditBtn").on("click", (event) => {
                     event.preventDefault();
-                    AddContact(document.getElementById("fullName").value,
-                               document.getElementById("contactNumber").value,
-                               document.getElementById("email").value,
-                               document.getElementById("message").value);
+                    let fullName = document.forms[0].fullName.value;
+                    let contactNumber = document.forms[0].contactNumber.value;
+                    let emailAddress = document.forms[0].emailAddress.value;
+                    let message = document.forms[0].message.value;
+                    AddContact(fullName, contactNumber, emailAddress, message);
                     location.href = "/contact-list";
                 });
-
-                $("#CancelBtn").on("click", () => {location.href = "/contact-list";});
+                $("#CancelBtn").on("click", () => { location.href = "/contact-list"; });
                 break;
-            default:{
+            default: {
                 let contact = new core.Contact();
                 contact.deserialize(localStorage.getItem(page));
                 $("#fullName").val(contact.FullName);
@@ -143,204 +120,137 @@
                 $("#message").val(contact.Message);
                 $("#EditBtn").on("click", (event) => {
                     event.preventDefault();
-
                     contact.FullName = $("#fullName").val();
                     contact.ContactNumber = $("#contactNumber").val();
                     contact.EmailAddress = $("#email").val();
                     contact.Message = $("#message").val();
-
                     localStorage.setItem(page, contact.serialize());
-
                     location.href = "/contact-list";
                 });
-                $("#CancelBtn").on("click", () => {location.href = "/contact-list";});
+                $("#CancelBtn").on("click", () => { location.href = "/contact-list"; });
                 break;
             }
         }
     }
-
-    function DisplayLoginPage(){
-        console.log("Display Login Page")
-
+    function DisplayLoginPage() {
+        console.log("Display Login Page");
         let messageArea = $("#messageArea");
         messageArea.hide();
-        $("#loginBtn").on("click", function(){
-
+        $("#loginBtn").on("click", function () {
             let success = false;
             let newUser = new core.User();
-
-            $.get("./data/user.json", function(data){
-
-                for(const u of data.users){
-                    if(userName.value === u.Username && password.value === u.Password){
+            $.get("./data/user.json", function (data) {
+                let userName = document.forms[0].userName.value;
+                let password = document.forms[0].password.value;
+                for (const u of data.users) {
+                    if (userName.value === u.Username && password.value === u.Password) {
                         success = true;
                         newUser.fromJSON(u);
                         break;
                     }
                 }
-
-                if(success){
+                if (success) {
                     sessionStorage.setItem("user", newUser.serialize());
                     messageArea.removeAttr("class").hide();
                     location.href = "/contact";
                 }
-                else{
+                else {
                     $("#userName").trigger("focus").trigger("select");
                     messageArea.addClass("alert alert-danger").text("Error: Failed to authenticate");
                 }
-
             });
-
         });
-
-        $("#cancelBtn").on("click", function(){
+        $("#cancelBtn").on("click", function () {
             document.forms[0].reset();
             location.href = "/";
-        })
-
+        });
     }
-    function DisplayRegisterPage(){
-        console.log("Display Register Page")
+    function DisplayRegisterPage() {
+        console.log("Display Register Page");
     }
-
-    function Display404Page(){
-        console.log("Displaying 404 Page")
+    function Display404Page() {
+        console.log("Displaying 404 Page");
     }
-
-    function CheckLogin(){
-
-        if(sessionStorage.getItem("user")){
-
+    function CheckLogin() {
+        if (sessionStorage.getItem("user")) {
             $("#login").html(`<a id="logout" class="nav-link" href="#">
                             <i class="fa-solid fa-sign-out-alt"></i> Logout</a>`);
-
         }
-        $("#logout").on("click", function(){
+        $("#logout").on("click", function () {
             sessionStorage.clear();
             location.href = "/";
-        })
+        });
     }
-
-    /**
-     * Creates a contact from the given parameters
-     * @param {string}fullName
-     * @param {string}contactNumber
-     * @param {string}emailAddress
-     * @param {string}message
-     */
-    function AddContact(fullName, contactNumber, emailAddress, message){
+    function AddContact(fullName, contactNumber, emailAddress, message) {
         let contact = new core.Contact(fullName, contactNumber, emailAddress, message);
-        if(contact.serialize()){
-            let key = contact.FullName.substring(0,1) + Date.now();
+        if (contact.serialize()) {
+            let key = contact.FullName.substring(0, 1) + Date.now();
             localStorage.setItem(key, contact.serialize());
         }
     }
-
-    function ContactFormValidation(){
-        // Validate full name
-        ValidateField("#fullName",
-            /^([A-Z][a-z]{1,3}\.?\s)?([A-Z][a-z]+)+([\s,-]([A-Z][a-z]+))*$/,
-            "Please enter a valid first and last name (ex. Mr. Peter Parker)");
-        // Validate Phone Number
-        ValidateField("#contactNumber",
-            /^(\+\d{1,3}[\s-.])?\(?\d{3}\)?[\s-.]?\d{3}[\s-.]\d{4}$/,
-            "Please enter a valid phone number (ex. 555 555-5555");
-        // Validate Email Address
-        ValidateField("#email",
-            /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,10}$/,
-            "Please enter a valid email address (ex. example@email.com");
+    function ContactFormValidation() {
+        ValidateField("#fullName", /^([A-Z][a-z]{1,3}\.?\s)?([A-Z][a-z]+)+([\s,-]([A-Z][a-z]+))*$/, "Please enter a valid first and last name (ex. Mr. Peter Parker)");
+        ValidateField("#contactNumber", /^(\+\d{1,3}[\s-.])?\(?\d{3}\)?[\s-.]?\d{3}[\s-.]\d{4}$/, "Please enter a valid phone number (ex. 555 555-5555");
+        ValidateField("#email", /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,10}$/, "Please enter a valid email address (ex. example@email.com");
     }
-
-    function ValidateField(inputFieldID, regularExpression, errorMessage){
+    function ValidateField(inputFieldID, regularExpression, errorMessage) {
         let messageArea = $("#messageArea");
-
-        $(inputFieldID).on("blur", function(){
-
+        $(inputFieldID).on("blur", function () {
             let inputFieldText = $(this).val();
-            if(!regularExpression.test(inputFieldText)){
-                // fail validation
-                $(this).trigger("focus").trigger("select"); // go back to the fullName text
+            if (!regularExpression.test(inputFieldText)) {
+                $(this).trigger("focus").trigger("select");
                 messageArea.addClass("alert alert-danger").text(errorMessage).show();
-            }else{
-                //pass validation
+            }
+            else {
                 messageArea.removeAttr("class").hide();
             }
         });
     }
-
-    function AjaxRequest(method, url, callback){
-        // Step 1
+    function AjaxRequest(method, url, callback) {
         let xhr = new XMLHttpRequest();
-
-        // Step 2
-        xhr.addEventListener("readystatechange", ()=>{
-            if(xhr.readyState === 4 && xhr.status === 200){
-                if(typeof callback === "function"){
+        xhr.addEventListener("readystatechange", () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (typeof callback === "function") {
                     callback(xhr.responseText);
-                }else{
-                    console.error("Error: Please provide a valid function for callback")
+                }
+                else {
+                    console.error("Error: Please provide a valid function for callback");
                 }
             }
         });
-
-        // Step 3
         xhr.open(method, url);
-
-        // Step 4
-        xhr.send()
+        xhr.send();
     }
-
-    function capitalizeFirstCharacter(str){
+    function capitalizeFirstCharacter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
-
-    function LoadHeader(data){
-
-        $.get("/views/components/header.html", function (html_data){
-
+    function LoadHeader() {
+        $.get("/views/components/header.html", function (html_data) {
             $("header").html(html_data);
-
             document.title = capitalizeFirstCharacter(router.ActiveLink);
-
             $(`li>a:contains(${document.title})`).addClass("active");
             CheckLogin();
         });
     }
-
-    function LoadContent(){
-
+    function LoadContent() {
         let page = router.ActiveLink;
         let callback = ActiveLinkCallback();
-
-        $.get(`/views/content/${page}.html`, function (html_data){
-
+        $.get(`/views/content/${page}.html`, function (html_data) {
             $("main").html(html_data);
             callback();
-
         });
-
     }
-
-    function LoadFooter(){
-
-        $.get("/views/components/footer.html", function (html_data){
-
+    function LoadFooter() {
+        $.get("/views/components/footer.html", function (html_data) {
             $("footer").html(html_data);
         });
-
     }
-
     function Start() {
         console.log("App Started!");
-
         LoadHeader();
-
         LoadContent();
-
         LoadFooter();
     }
-
-    window.addEventListener("load", Start)
-
+    window.addEventListener("load", Start);
 })();
-
+//# sourceMappingURL=app.js.map
