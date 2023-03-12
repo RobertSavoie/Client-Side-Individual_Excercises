@@ -1,5 +1,4 @@
 "use strict";
-var Router = core.Router;
 var core;
 (function (core) {
     class Router {
@@ -41,6 +40,7 @@ let router = new core.Router();
 router.AddTable([
     "/",
     "/home",
+    "/services",
     "/about",
     "/contact",
     "/contact-list",
@@ -48,7 +48,6 @@ router.AddTable([
     "/login",
     "/products",
     "/register",
-    "/services"
 ]);
 let route = location.pathname;
 router.ActiveLink = (router.Find(route) > -1)

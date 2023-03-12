@@ -1,9 +1,5 @@
-// noinspection JSJQueryEfficiency
-
 "use strict";
 
-//IIFE - Immediately Invoked Function Expression
-//AKA  - Anonymous Self-Executing Function
 (function(){
     /**
      * Returns a function for the activeLink (current path) to display
