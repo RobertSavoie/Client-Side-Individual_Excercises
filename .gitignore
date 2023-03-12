@@ -1,3 +1,7 @@
+# Webstorm stuff
+/.idea/dictionaries/
+
+# Node Modules
 /week1/node_modules/
 /week2-1/node_modules/
 /week2-2/node_modules/
@@ -8,4 +12,4 @@
 /lessons/ajax-tutorial/node_modules/
 /week7-1/node_modules/
 /week9-2/node_modules/
-/.idea/dictionaries/rober.xml
+/week10-1/node_modules/
