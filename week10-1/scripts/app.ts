@@ -392,6 +392,11 @@ import ClickEvent = JQuery.ClickEvent;
     function DisplayRegisterPage() : void {
         console.log("Display Register Page")
         AddLinkEvents("login");
+
+        $("#cancelBtn").on("click", function(){
+            document.forms[0].reset();
+            LoadLink("register");
+        })
     }
 
     function Display404Page() : void {

@@ -277,6 +277,10 @@
     function DisplayRegisterPage() {
         console.log("Display Register Page");
         AddLinkEvents("login");
+        $("#cancelBtn").on("click", function () {
+            document.forms[0].reset();
+            LoadLink("register");
+        });
     }
     function Display404Page() {
         console.log("Displaying 404 Page");
