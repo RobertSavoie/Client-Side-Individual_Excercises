@@ -1,7 +1,6 @@
 {
-
-  "users" : [
-
+  "users" :
+  [
     {
       "DisplayName" : "Bilbo Baggins",
       "EmailAddress" : "bilbo@domain.ca",
@@ -19,6 +18,12 @@
       "EmailAddress" : "gandalf@domain.ca",
       "Username" : "gthegray",
       "Password" : "567890"
+    },
+    {
+      "DisplayName" : "Admin",
+      "EmailAddress" : "admin@domain.ca",
+      "Username" : "admin",
+      "Password" : "123456"
     }
 
   ]

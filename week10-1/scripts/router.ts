@@ -5,26 +5,29 @@ namespace core {
         // Public Properties
         private m_activeLink: string;
         private m_routingTable: string[];
-        /**
-         *
-         * @returns {string}
-         */
-        get ActiveLink() :string{
-            return this.m_activeLink;
-        }
-
-        /**
-         *
-         * @param link {string}
-         */
-        set ActiveLink(link:string) {
-            this.m_activeLink = link;
-        }
+        private m_linkData : string;
 
         // Constructor
         constructor() {
             this.m_activeLink = "";
             this.m_routingTable = [];
+            this.m_linkData = "";
+        }
+
+        get LinkData() :string{
+            return this.m_linkData;
+        }
+
+        set LinkData(data:string) {
+            this.m_linkData = data;
+        }
+
+        get ActiveLink() :string{
+            return this.m_activeLink;
+        }
+
+        set ActiveLink(link:string) {
+            this.m_activeLink = link;
         }
 
         // Public Methods
