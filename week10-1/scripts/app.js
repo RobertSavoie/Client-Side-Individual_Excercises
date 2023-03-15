@@ -247,7 +247,7 @@
         $("#loginBtn").on("click", function () {
             let success = false;
             let newUser = new core.User();
-            $.get("./data/user.json", function (data) {
+            $.get("./data/users.json", function (data) {
                 for (const u of data.users) {
                     let userName = document.forms[0].userName.value;
                     let password = document.forms[0].password.value;

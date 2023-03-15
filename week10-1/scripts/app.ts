@@ -355,7 +355,7 @@ import ClickEvent = JQuery.ClickEvent;
             let success = false;
             let newUser = new core.User();
 
-            $.get("./data/user.json", function(data){
+            $.get("./data/users.json", function(data){
 
                 for(const u of data.users){
 
