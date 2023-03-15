@@ -38,44 +38,52 @@ import ClickEvent = JQuery.ClickEvent;
         LoadContent();
     }
 
-    function AddNavigationEvents() : void {
+    function AddNavigationEvents(): void
+    {
 
-        let NavLinks = $("ul>li>a");
+        let NavLinks = $("ul>li>a"); // find all Navigation Links
 
         NavLinks.off("click");
         NavLinks.off("mouseover");
 
-        NavLinks.on("click", function (){
+        // loop through each Navigation link and load appropriate content on click
+        NavLinks.on("click", function()
+        {
             LoadLink($(this).attr("data") as string);
         });
 
-        NavLinks.on("mouseover", function (){
+        NavLinks.on("mouseover", function()
+        {
             $(this).css("cursor", "pointer");
         });
-
     }
 
-    function AddLinkEvents(link : string) : void {
-
+    function AddLinkEvents(link: string): void
+    {
         let linkQuery = $(`a.link[data=${link}]`);
-
+        // remove all link events
         linkQuery.off("click");
         linkQuery.off("mouseover");
         linkQuery.off("mouseout");
 
+        // css adjustments for links
         linkQuery.css("text-decoration", "underline");
         linkQuery.css("color", "blue");
 
-        linkQuery.on("click", function (){
+        // add link events
+        linkQuery.on("click", function()
+        {
             LoadLink(`${link}`);
         });
 
-        linkQuery.on("mouseover", function (){
+        linkQuery.on("mouseover", function()
+        {
             $(this).css('cursor', 'pointer');
             $(this).css('font-weight', 'bold');
         });
 
-        linkQuery.on("mouseout", function (){
+        linkQuery.on("mouseout", function()
+        {
             $(this).css('font-weight', 'normal');
         });
     }
@@ -380,7 +388,6 @@ import ClickEvent = JQuery.ClickEvent;
             document.forms[0].reset();
             LoadLink("home");
         })
-
     }
     function DisplayRegisterPage() : void {
         console.log("Display Register Page")
