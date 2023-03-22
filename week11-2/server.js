@@ -12,8 +12,9 @@ app.use(router);
 app.set("views", path_1.default.join(__dirname, "./views"));
 app.set("view engine", "ejs");
 app.use(express_1.default.static(path_1.default.join(__dirname, "/client/")));
-app.use('/', function (req, res) {
-    res.send("Hello, World");
+app.use(express_1.default.static(path_1.default.join(__dirname, "/node_modules/")));
+router.get('/', function (req, res, next) {
+    res.render('index', { title: "Hello, World!" });
 });
 app.listen(port, () => {
     console.log(`Server running at:${port}/`);

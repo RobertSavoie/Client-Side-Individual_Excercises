@@ -15,11 +15,12 @@ app.set("views", path.join(__dirname, "./views"));
 app.set("view engine", "ejs");
 
 //STATIC CONFIGURATIONS
-app.use(express.static(path.join(__dirname, "/client/")))
+app.use(express.static(path.join(__dirname, "/client/")));
+app.use(express.static(path.join(__dirname, "/node_modules/")));
 
 //MIDDLEWARE
-app.use('/', function (req, res){
-   res.send("Hello, World");
+router.get('/', function (req, res, next){
+    res.render('index', {title: "Hello, World!"});
 });
 
 
