@@ -1,5 +1,5 @@
 {
-  "name": "week6-2",
+  "name": "week11-2",
   "version": "1.0.0",
   "main": "server.js",
   "repository": "https://github.com/RobertSavoie/WEBD-6201-ICEs.git",
@@ -12,12 +12,14 @@
     "@fortawesome/fontawesome-free": "^6.2.1",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
     "jquery": "^3.6.3",
     "mime-types": "^2.1.35",
     "typescript": "^4.9.5"
   },
   "devDependencies": {
+    "@types/ejs": "^3.1.2",
     "@types/express": "^4.17.17",
     "@types/jquery": "^3.5.16",
     "@types/mime-types": "^2.1.1",
