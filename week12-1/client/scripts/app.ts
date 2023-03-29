@@ -78,11 +78,6 @@ import ClickEvent = JQuery.ClickEvent;
     function DisplayContactPage() : void {
         console.log("Contact Us Page")
 
-        $("a[data='contact-list']").off("click");
-        $("a[data='contact-list']").on("click", function (){
-           location.href = "/contact-list";
-        });
-
         ContactFormValidation();
 
         let sendButton = document.getElementById("SendBtn") as HTMLElement;
@@ -159,7 +154,7 @@ import ClickEvent = JQuery.ClickEvent;
             });
 
             $("button.edit").on("click", function () {
-                location.href = "/edit" + $(this).val() as string;
+                location.href = "/edit#" + $(this).val() as string;
             });
         }
     }

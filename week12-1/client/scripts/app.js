@@ -51,10 +51,6 @@
     }
     function DisplayContactPage() {
         console.log("Contact Us Page");
-        $("a[data='contact-list']").off("click");
-        $("a[data='contact-list']").on("click", function () {
-            location.href = "/contact-list";
-        });
         ContactFormValidation();
         let sendButton = document.getElementById("SendBtn");
         let subscribeCheckbox = document.getElementById("subscriptionCheckbox");
@@ -114,7 +110,7 @@
                 location.href = "/contact-list";
             });
             $("button.edit").on("click", function () {
-                location.href = "/edit" + $(this).val();
+                location.href = "/edit#" + $(this).val();
             });
         }
     }
