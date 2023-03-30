@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-import app from './app';
+import app from './config/app';
 import debug from 'debug';
 import {HttpError} from "http-errors";
 debug('temp1:server');
