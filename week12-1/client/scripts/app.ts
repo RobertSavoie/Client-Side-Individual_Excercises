@@ -90,7 +90,7 @@ import ClickEvent = JQuery.ClickEvent;
 
                 let fullName = document.forms[0].fullName.value;
                 let contactNumber = document.forms[0].contactNumber.value;
-                let emailAddress = document.forms[0].emailAddress.value;
+                let emailAddress = document.forms[0].email.value;
                 let message = document.forms[0].message.value;
 
                 let contact = new core.Contact(fullName, contactNumber, emailAddress, message);

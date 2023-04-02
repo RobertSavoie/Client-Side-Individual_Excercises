@@ -56,7 +56,7 @@ namespace core {
 
         public serialize() : string | null {
             if (this.FullName !== "" && this.ContactNumber !== "" && this.EmailAddress !== "" && this.Message !== "") {
-                return `${this.FullName}, ${this.ContactNumber}, ${this.EmailAddress}, ${this.Message}`;
+                return `${this.FullName},${this.ContactNumber},${this.EmailAddress},${this.Message}`;
             }
             console.error("One or more of the attributes are empty or missing")
             return null;
