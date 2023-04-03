@@ -6,7 +6,7 @@ import logger from 'morgan';
 import mongoose from 'mongoose';
 
 import indexRouter from '../routes/index';
-import usersRouter from '../routes/users';
+import contactsRouter from '../routes/contacts';
 import * as DBConfig from './db';
 mongoose.connect(DBConfig.LocalURI);
 
@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.static(path.join(__dirname, '../node_modules')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', contactsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
