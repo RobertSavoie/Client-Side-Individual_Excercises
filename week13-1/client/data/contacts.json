@@ -1,0 +1,20 @@
+{
+  "contacts" :
+  [
+    {
+      "DisplayName": "Bilbo Baggins",
+      "ContactNumber": "416-555-5555",
+      "EmailAddress": "bbaggins@domain.com"
+    },
+    {
+      "DisplayName": "Peter Parker",
+      "ContactNumber": "416-123-4567",
+      "EmailAddress": "pparker@domain.com"
+    },
+    {
+      "DisplayName": "Admin",
+      "ContactNumber": "416-123-4567",
+      "EmailAddress": "admin@domain.com"
+    }
+  ]
+}
