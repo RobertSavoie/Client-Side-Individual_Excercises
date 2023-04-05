@@ -2,7 +2,7 @@ import mongoose, {Schema} from "mongoose";
 
 const ContactSchema = new Schema(
     {
-        FullName: String,
+        DisplayName: String,
         ContactNumber: String,
         EmailAddress: String
     },

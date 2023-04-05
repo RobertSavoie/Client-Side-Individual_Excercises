@@ -32,12 +32,11 @@ router.get('/add', function (req, res, next) {
 });
 router.post('/add', function (req, res, next) {
     let newContact = new contact_1.default({
-        "Fullname": req.body.fullName,
+        "DisplayName": req.body.fullName,
         "ContactNumber": req.body.contactNumber,
-        "EmailAddress": req.body.email,
-        "Message": req.body.message
+        "EmailAddress": req.body.email
     });
-    contact_1.default.create(newContact).then(function (contactToEdit) {
+    contact_1.default.create(newContact).then(function () {
         res.redirect('/contact-list');
     }).catch(function (err) {
         console.error("Failed to add contact " + err);
@@ -67,10 +66,7 @@ router.get('/delete/:id', function (req, res, next) {
 router.get('/edit/:id', function (req, res, next) {
     let id = req.params.id;
     contact_1.default.findById(id).then(function (contactToEdit) {
-        res.render('index', {
-            title: 'Edit Contacts', page: 'edit',
-            contact: contactToEdit, displayName: ''
-        });
+        res.render('index', { title: 'Edit Contacts', page: 'edit', contact: contactToEdit, displayName: '' });
     }).catch(function (err) {
         console.error("Failed to retrieve contact from database " + err);
         res.end();
@@ -80,7 +76,7 @@ router.post('/edit/:id', function (req, res, next) {
     let id = req.params.id;
     let updatedContact = new contact_1.default({
         "_id": id,
-        "Fullname": req.body.fullName,
+        "DisplayName": req.body.fullName,
         "ContactNumber": req.body.contactNumber,
         "EmailAddress": req.body.email
     });
