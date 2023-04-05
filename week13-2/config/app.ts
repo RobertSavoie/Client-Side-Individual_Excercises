@@ -5,6 +5,15 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 
+import session from 'express-session';
+import passport from 'passport';
+import passportLocal from 'passport-local';
+import flash from 'connect-flash';
+
+let localStrategy = passportLocal.Strategy;
+
+import User from '../models/user';
+
 import indexRouter from '../routes/index';
 import contactsRouter from '../routes/contacts';
 import * as DBConfig from './db';

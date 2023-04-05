@@ -1,6 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 
-const ContactSchema = new Schema(
+const ContactSchema : any = new mongoose.Schema(
     {
         DisplayName : String,
         ContactNumber : String,
