@@ -8,9 +8,21 @@ import mongoose from 'mongoose';
 import indexRouter from '../routes/index';
 import contactsRouter from '../routes/contacts';
 import * as DBConfig from './db';
-mongoose.connect(DBConfig.LocalURI);
+// mongoose.connect(DBConfig.LocalURI);
+mongoose.connect(DBConfig.RemoteURI);
+
+//modules for authentication
+import session from 'express-session';
+import passport from 'passport';
+import passportLocal from 'passport-local';
+import flash from 'connect-flash';
+
+let localStrategy = passportLocal.Strategy;
+
+import User from '../models/user';
 
 const app = express();
+
 const db = mongoose.connection;
 
 db.on("error", function(){
@@ -29,8 +41,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, '../client')));
-app.use(express.static(path.join(__dirname, '../node_modules')));
+//Added Static Paths - client, node_modules
+app.use(express.static(path.join(__dirname, '../../client')));
+app.use(express.static(path.join(__dirname, '../../node_modules')));
+
+app.use(session ({
+  secret : DBConfig.SessionSecret,
+  saveUninitialized : false,
+  resave : false
+}));
+
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Implement an Authentication Strategy
+passport.use(User.createStrategy());
+
+//serialize and deserialize
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use('/', indexRouter);
 app.use('/users', contactsRouter);

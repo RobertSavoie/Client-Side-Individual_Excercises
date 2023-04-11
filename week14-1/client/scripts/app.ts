@@ -104,119 +104,20 @@ import ClickEvent = JQuery.ClickEvent;
         });
     }
     function DisplayContactListPage() : void {
-        console.log("Contact List Page")
+        console.log("Contact List Page");
 
-        if(localStorage.length > 0){
-            let contactList = document.getElementById("contactList") as HTMLElement;
-
-            let data = "";
-
-            let keys = Object.keys(localStorage);
-
-            let index = 1;
-
-            for(const key of keys){
-                let contactData = localStorage.getItem(key) as string;
-
-                let contact = new core.Contact();
-                contact.deserialize(contactData);
-
-                data += `<tr>
-                         <th scope="row" class="text-center">${index}</th>
-                         <td>${contact.FullName}</td>
-                         <td>${contact.ContactNumber}</td>
-                         <td>${contact.EmailAddress}</td>
-                         <td>${contact.Message}</td>                         
-                         <td class="text-center">
-                            <button value="${key}" class="btn btn-primary btn-sm edit">
-                                <i class="fa-solid fa-edit fa-sm"></i> Edit
-                            </button>
-                         </td>
-                         <td>
-                            <button value="${key}" class="btn btn-danger btn-sm delete">
-                                <i class="fa-regular fa-trash-alt fa-sm"></i> Delete
-                            </button>
-                         </td>
-                         </tr>`;
-                index++;
-            }
-            contactList.innerHTML = data;
-
-            $("#AddBtn").on("click", () => {
-                location.href = "/edit#add";
-            });
-
-            $("button.delete").on("click", function () {
-                if(confirm("Are you sure you want to delete this contact?")){
-                    localStorage.removeItem($(this).val() as string);
-                }
+        $("a.delete").on("click", function (event) {
+            if (!confirm("Are you sure you want to delete this contact?")) {
+                event.preventDefault();
                 location.href = "/contact-list";
-            });
-
-            $("button.edit").on("click", function () {
-                location.href = "/edit#" + $(this).val() as string;
-            });
-        }
+            }
+        });
     }
 
     function DisplayEditPage() : void {
         console.log("Edit Contact Page")
 
         ContactFormValidation();
-
-        let page : string = location.hash.substring(1) as string;
-
-        switch(page){
-            case "add" : {
-                $("main>h1").text("Add Contact");
-
-                $("#EditBtn").html(`<i class="fas fa-plus fa-sm"></i> Add`);
-
-                $("#EditBtn").on("click", (event : ClickEvent) => {
-                    event.preventDefault();
-
-                    let fullName = document.forms[0].fullName.value;
-                    let contactNumber = document.forms[0].contactNumber.value;
-                    let emailAddress = document.forms[0].emailAddress.value;
-                    let message = document.forms[0].message.value;
-
-                    AddContact(fullName, contactNumber, emailAddress, message);
-                    location.href = "/contact-list";
-                });
-
-                $("#CancelBtn").on("click", () => {
-                    location.href = "/contact-list";
-                });
-            }
-            break;
-        default : {
-                let contact = new core.Contact();
-                contact.deserialize(localStorage.getItem(page) as string);
-
-                $("#fullName").val(contact.FullName);
-                $("#contactNumber").val(contact.ContactNumber);
-                $("#email").val(contact.EmailAddress);
-                $("#message").val(contact.Message);
-
-                $("#EditBtn").on("click", (event) => {
-
-                    event.preventDefault();
-
-                    contact.FullName = $("#fullName").val() as string;
-                    contact.ContactNumber = $("#contactNumber").val() as string;
-                    contact.EmailAddress = $("#email").val() as string;
-                    contact.Message = $("#message").val() as string;
-
-                    localStorage.setItem(page, contact.serialize() as string);
-
-                    location.href = "/contact-list";
-                });
-                $("#CancelBtn").on("click", () => {
-                    location.href = "/contact-list";
-                });
-            }
-            break;
-        }
     }
 
     function CheckLogin() : void {
@@ -321,11 +222,15 @@ import ClickEvent = JQuery.ClickEvent;
                 DisplayContactPage();
                 break;
             case "contact-list":
-                AuthGuard();
+                // AuthGuard();
                 DisplayContactListPage();
                 break;
+            case "add":
+                // AuthGuard();
+                DisplayEditPage();
+                break;
             case "edit":
-                AuthGuard();
+                // AuthGuard();
                 DisplayEditPage();
                 break;
             case "login":

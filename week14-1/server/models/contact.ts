@@ -1,10 +1,10 @@
 import mongoose, {Schema} from "mongoose";
 
-const ContactSchema = new Schema(
+const ContactSchema : any = new mongoose.Schema(
     {
-        FullName: String,
-        ContactNumber: String,
-        EmailAddress: String
+        DisplayName : String,
+        ContactNumber : String,
+        EmailAddress : String
     },
     {
         collection: "contacts"
