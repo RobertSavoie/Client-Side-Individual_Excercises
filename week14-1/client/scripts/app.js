@@ -82,57 +82,11 @@
         console.log("Edit Contact Page");
         ContactFormValidation();
     }
-    function CheckLogin() {
-        if (sessionStorage.getItem("user")) {
-            $("#login").html(`<a id="logout" class="nav-link" href="#">
-                            <i class="fa-solid fa-sign-out-alt"></i> Logout</a>`);
-            $("#logout").on("click", function () {
-                sessionStorage.clear();
-                $("#login").html(`<a class="nav-link" data="login"><i class="fas fa-sign-in-alt"></i> Login</a>`);
-                location.href = "/login";
-            });
-        }
-    }
     function DisplayLoginPage() {
         console.log("Display Login Page");
-        let messageArea = $("#messageArea");
-        messageArea.hide();
-        $("#loginBtn").on("click", function () {
-            let success = false;
-            let newUser = new core.User();
-            $.get("./data/users.json", function (data) {
-                for (const u of data.users) {
-                    let userName = document.forms[0].userName.value;
-                    let password = document.forms[0].password.value;
-                    if (userName === u.Username && password === u.Password) {
-                        console.log("success");
-                        success = true;
-                        newUser.fromJSON(u);
-                        break;
-                    }
-                }
-                if (success) {
-                    sessionStorage.setItem("user", newUser.serialize());
-                    messageArea.removeAttr("class").hide();
-                    location.href = "/contact-list";
-                }
-                else {
-                    $("#userName").trigger("focus").trigger("select");
-                    messageArea.addClass("alert alert-danger").text("Error: Failed to authenticate");
-                }
-            });
-        });
-        $("#cancelBtn").on("click", function () {
-            document.forms[0].reset();
-            location.href = "/home";
-        });
     }
     function DisplayRegisterPage() {
         console.log("Display Register Page");
-        $("#cancelBtn").on("click", function () {
-            document.forms[0].reset();
-            location.href = "/register";
-        });
     }
     function Display404Page() {
         console.log("Displaying 404 Page");
@@ -140,7 +94,6 @@
     function Start() {
         console.log("App Started!");
         let page_id = $("body")[0].getAttribute("id");
-        CheckLogin();
         switch (page_id) {
             case "home":
                 DisplayHomePage();
