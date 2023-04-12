@@ -27,7 +27,7 @@ const Model = mongoose.model("User", UserSchema);
 declare global{
     export type UserDocument = mongoose.Document &
         {
-            Username : String,
+            username : String,
             EmailAddress : String,
             DisplayName : String
         }
