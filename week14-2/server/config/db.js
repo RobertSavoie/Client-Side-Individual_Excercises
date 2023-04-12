@@ -4,5 +4,5 @@ exports.SessionSecret = exports.HostName = exports.LocalURI = exports.RemoteURI 
 exports.RemoteURI = "mongodb+srv://purpleriggz:TuvFuOSYQ9P20puE@cluster0.zsjlkpb.mongodb.net/contacts?retryWrites=true&w=majority";
 exports.LocalURI = "mongodb://localhost/contacts";
 exports.HostName = "Mongo DBN Atlas";
-exports.SessionSecret = "WEBD6201SessionSecret";
+exports.SessionSecret = "Welcome to the Thunder dome";
 //# sourceMappingURL=db.js.map

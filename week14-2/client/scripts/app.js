@@ -1,5 +1,4 @@
 "use strict";
-var ClickEvent = JQuery.ClickEvent;
 (function () {
     function AuthGuard() {
         let protected_routes = ["contact-list, edit"];
